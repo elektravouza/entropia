@@ -9,44 +9,18 @@
   <meta property="og:description" content="A full-day, full-night beach situation. 18 July · Dragonera Beach Bar." />
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='80' font-size='80'>🍒</text></svg>" />
 
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Anton&family=Instrument+Serif:ital@0;1&family=Silkscreen:wght@400;700&family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/fonts.css" />
   <link rel="stylesheet" href="css/style.css" />
 </head>
 <body>
 
-  <!-- ===================== ENTER GATE (paika-style) ===================== -->
+  <!-- ===================== ENTER GATE ===================== -->
   <div class="gate" id="gate">
-
-    <span class="gate__corner gate__corner--tl">18/07</span>
-    <span class="gate__corner gate__corner--tr">07/18</span>
-
-    <span class="tag" style="--r:-7deg; top:16%; left:6%;">INV Nº26</span>
-    <span class="tag" style="--r:5deg; top:24%; right:7%;">GLAM:ON</span>
-    <span class="tag" style="--r:-4deg; top:55%; left:4%;">SPF:50</span>
-    <span class="tag" style="--r:8deg; top:62%; right:5%;">SHAME:0%</span>
-
-    <div class="gate__faces" aria-hidden="true">
-      <img class="gate__face gate__face--one face-img" src="assets/face.png" alt="" />
-      <img class="gate__face gate__face--two face-img" src="assets/face.png" alt="" />
-    </div>
-
-    <div class="gate__type" aria-hidden="false">
-      <h1 class="gate__big gate__big--one">IT'S MY</h1>
-      <h1 class="gate__big gate__big--two">BIRTHDAY</h1>
-    </div>
-
-    <div class="gate__panel">
-      <p class="gate__serif">the 26th edition. you're <em>cordially summoned</em> to the problem.</p>
+    <span class="gate__label">entropia · invitation nº 26 · 18.07</span>
+    <div class="gate__pop" id="gatePop" aria-hidden="true"></div>
+    <div class="gate__panel" id="gatePanel">
       <p class="gate__soundnote">♪ this website makes sound. so do I. volume up.</p>
       <button class="btn btn--enter" id="enterBtn">ENTER</button>
-    </div>
-
-    <div class="gate__facestrip" aria-hidden="true">
-      <div class="facestrip__track" id="facestripTrack">
-        <!-- faces injected by js -->
-      </div>
     </div>
   </div>
 
@@ -69,10 +43,6 @@
           <span>HOT GIRL THERMODYNAMICS ☀ SUN, SALT &amp; STATISTICALLY GUARANTEED CHAOS ☀ </span>
         </div>
       </div>
-
-      <svg class="scribble scribble--hero" viewBox="0 0 400 300" aria-hidden="true">
-        <path d="M30,210 C90,40 150,260 210,90 S330,250 385,60 M60,260 C160,170 240,290 350,180" />
-      </svg>
 
       <span class="tag tag--light" style="--r:-6deg; top:22%; left:7%;">BRAIN:EMPTY(!)</span>
       <span class="tag tag--light" style="--r:5deg; top:30%; right:8%;">(HQ) BEACH</span>
@@ -101,10 +71,6 @@
 
     <!-- ACT III · THE INTEL (chaotic collage) -->
     <section class="details" id="details">
-      <svg class="scribble scribble--details" viewBox="0 0 400 600" aria-hidden="true">
-        <path d="M40,80 C200,-20 340,160 180,260 S30,420 220,500 S380,560 350,440" />
-      </svg>
-
       <span class="tag tag--light" style="--r:6deg; top:8%; right:8%;">HYDRATION? OPTIONAL</span>
       <span class="tag tag--light" style="--r:-5deg; bottom:10%; left:6%;">(01) GLAM</span>
       <span class="deco" style="--r:8deg; top:14%; left:8%;">☼</span>
@@ -114,31 +80,37 @@
 
       <div class="details__field">
         <button class="sticker sticker--when" data-flip>
-          <span class="sticker__face sticker__front"><span class="sticker__icon">⏱</span>WHEN<span class="sticker__cta">tap tap tap</span></span>
-          <span class="sticker__face sticker__back">
-            <strong>SAT 18 JULY · 15:00</strong>
-            shots at three. we both know you'll be late.<br /><em>be late beautifully.</em>
+          <span class="sticker__inner">
+            <span class="sticker__face sticker__front"><span class="sticker__icon">⏱</span>WHEN<span class="sticker__cta">tap tap tap</span></span>
+            <span class="sticker__face sticker__back">
+              <strong>SAT 18 JULY · 15:00</strong>
+              shots at three. we both know you'll be late.<br /><em>be late beautifully.</em>
+            </span>
           </span>
         </button>
 
         <button class="sticker sticker--where" data-flip>
-          <span class="sticker__face sticker__front"><span class="sticker__icon">⌖</span>WHERE<span class="sticker__cta">tap tap tap</span></span>
-          <span class="sticker__face sticker__back">
-            <strong>DRAGONERA BEACH BAR</strong>
-            follow the bass and the smell of sunscreen.<br /><em>you'll know.</em>
+          <span class="sticker__inner">
+            <span class="sticker__face sticker__front"><span class="sticker__icon">⌖</span>WHERE<span class="sticker__cta">tap tap tap</span></span>
+            <span class="sticker__face sticker__back">
+              <strong>DRAGONERA BEACH BAR</strong>
+              follow the bass and the smell of sunscreen.<br /><em>you'll know.</em>
+            </span>
           </span>
         </button>
 
         <button class="sticker sticker--dress" data-flip>
-          <span class="sticker__face sticker__front"><span class="sticker__icon">✚</span>DRESS CODE<span class="sticker__cta">tap tap tap</span></span>
-          <span class="sticker__face sticker__back">
-            <strong>GLAM ON THE BEACH</strong>
-            (try it.) if your look can't survive a swim,<br /><em>that's between you and your god.</em>
+          <span class="sticker__inner">
+            <span class="sticker__face sticker__front"><span class="sticker__icon">✚</span>DRESS CODE<span class="sticker__cta">tap tap tap</span></span>
+            <span class="sticker__face sticker__back">
+              <strong>GLAM ON THE BEACH</strong>
+              (try it.) if your look can't survive a swim,<br /><em>that's between you and your god.</em>
+            </span>
           </span>
         </button>
 
         <figure class="itme" aria-hidden="true">
-          <img class="face-img" src="assets/face.png" alt="" />
+          <img class="face-img" src="assets/face-fallback.svg" alt="" />
           <figcaption>it me</figcaption>
         </figure>
       </div>
@@ -214,7 +186,7 @@
         </form>
 
         <div class="rsvp__done" id="rsvpDone" hidden>
-          <img class="rsvp__bigface face-img" id="bigFace" src="assets/face.png" alt="the birthday girl approves" />
+          <img class="rsvp__bigface face-img" id="bigFace" src="assets/face-fallback.svg" alt="the birthday girl approves" />
           <h4 class="rsvp__doneTitle">received.</h4>
           <p class="rsvp__doneText" id="rsvpDoneText">the ratio has been updated. wear sunscreen. bring chaos.<br /><em>see you july 18.</em></p>
         </div>

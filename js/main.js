@@ -5,9 +5,9 @@
 // party: daylight at the top, deep night at the RSVP.
 // ============================================================
 
-import gsap from "https://cdn.jsdelivr.net/npm/gsap@3.12.7/+esm";
-import { ScrollTrigger } from "https://cdn.jsdelivr.net/npm/gsap@3.12.7/ScrollTrigger.js/+esm";
-import Lenis from "https://cdn.jsdelivr.net/npm/lenis@1.1.18/+esm";
+import gsap from "./vendor/index.js";
+import { ScrollTrigger } from "./vendor/ScrollTrigger.js";
+import Lenis from "./vendor/lenis.mjs";
 import { Sky } from "./scene.js";
 import { Beach } from "./audio.js";
 
@@ -25,26 +25,24 @@ const FORMSPREE_ENDPOINT = "https://formspree.io/f/YOUR_FORM_ID";
 const sky = new Sky(document.getElementById("webgl"));
 const beach = new Beach();
 
-// ---------- her face: real photo or scribble fallback ----------
-// every .face-img falls back to the drawn face until
-// assets/face.png is uploaded (see README).
-const FALLBACK_FACE = "assets/face-fallback.svg";
-document.querySelectorAll(".face-img").forEach((img) => {
-  img.addEventListener("error", () => {
-    if (!img.src.endsWith(FALLBACK_FACE)) img.src = FALLBACK_FACE;
-  }, { once: true });
-});
+// ---------- her face ----------
+// tries her photo first, then face.png, then the drawn fallback.
+const FACE_SOURCES = ["assets/ME (1) 1.png", "assets/face.png", "assets/face-fallback.svg"];
+let faceSrc = FACE_SOURCES[0];
 
-// the bottom face marquee on the gate
-const strip = document.getElementById("facestripTrack");
-for (let i = 0; i < 24; i++) {
-  const f = document.createElement("img");
-  f.className = "face-img";
-  f.src = "assets/face.png";
-  f.alt = "";
-  f.addEventListener("error", () => (f.src = FALLBACK_FACE), { once: true });
-  strip.appendChild(f);
-}
+// figure out which source actually exists, then upgrade every face
+const facesReady = (async () => {
+  for (const src of FACE_SOURCES) {
+    const ok = await new Promise((resolve) => {
+      const probe = new Image();
+      probe.onload = () => resolve(true);
+      probe.onerror = () => resolve(false);
+      probe.src = src;
+    });
+    if (ok) { faceSrc = src; break; }
+  }
+  document.querySelectorAll(".face-img").forEach((img) => (img.src = faceSrc));
+})();
 
 // ---------- smooth scroll ----------
 const lenis = new Lenis({ lerp: 0.09, smoothWheel: true });
@@ -55,10 +53,40 @@ gsap.ticker.lagSmoothing(0);
 document.body.classList.add("locked");
 lenis.stop();
 
-// ---------- the gate: one button, sound comes with it ----------
+// ---------- the gate: she multiplies until she owns the screen ----------
 const gate = document.getElementById("gate");
 const soundToggle = document.getElementById("soundToggle");
 const soundLabel = document.getElementById("soundLabel");
+
+facesReady.then(() => {
+  const pop = document.getElementById("gatePop");
+  const COUNT = 30;
+  for (let i = 0; i < COUNT; i++) {
+    const f = document.createElement("img");
+    f.src = faceSrc;
+    f.alt = "";
+    // they start small and scattered, end huge — full takeover
+    const size = gsap.utils.interpolate(16, 58, i / (COUNT - 1)) + gsap.utils.random(-4, 4);
+    f.style.width = size + "vmin";
+    f.style.left = gsap.utils.random(-8, 82) + "vw";
+    f.style.top = gsap.utils.random(-6, 78) + "vh";
+    if (Math.random() > 0.5) f.style.scale = "-1 1";
+    pop.appendChild(f);
+    gsap.fromTo(
+      f,
+      { scale: 0, rotation: gsap.utils.random(-60, 60), opacity: 0 },
+      { scale: 1, rotation: gsap.utils.random(-16, 16), opacity: 1, duration: 0.55, ease: "back.out(1.8)", delay: 0.4 + i * 0.1 }
+    );
+  }
+  // …and then the button gets the last word
+  gsap.to("#gatePanel", {
+    opacity: 1,
+    scale: 1,
+    duration: 0.7,
+    ease: "back.out(1.7)",
+    delay: 0.4 + COUNT * 0.1 + 0.3,
+  });
+});
 
 document.getElementById("enterBtn").addEventListener("click", () => {
   beach.start();
@@ -95,11 +123,12 @@ soundToggle.addEventListener("click", () => {
 });
 
 // ---------- scroll = time of day (slow fade into night) ----------
-ScrollTrigger.create({
-  trigger: document.body,
-  start: "top top",
-  end: "bottom bottom",
-  onUpdate: (self) => sky.setProgress(self.progress),
+// lenis reports overall progress (0 at top, 1 at the RSVP) on
+// every scroll frame — the sky reads the time of day from it.
+lenis.on("scroll", (e) => {
+  if (typeof e.progress === "number" && !Number.isNaN(e.progress)) {
+    sky.setProgress(e.progress);
+  }
 });
 
 // ---------- generic reveals (everything except hero) ----------
@@ -277,7 +306,7 @@ form.addEventListener("submit", async (e) => {
 });
 
 function confetti() {
-  const colors = ["#c8ff1e", "#ff2e2e", "#4da6ff", "#ff7ab6", "#ff4fd2", "#f4f1ea"];
+  const colors = ["#ecfd06", "#f52d93", "#3d39ea", "#fb92d0", "#f4f1ea"];
   for (let i = 0; i < 90; i++) {
     const c = document.createElement("div");
     c.className = "confetto";
@@ -319,3 +348,6 @@ function faceRain() {
 
 // keep pin math honest after fonts/images settle
 window.addEventListener("load", () => ScrollTrigger.refresh());
+
+// debug handle (harmless in production)
+window.__entropia = { sky, ScrollTrigger, lenis };

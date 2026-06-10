@@ -25,14 +25,16 @@ entropia/
 
 ### ⭐ Adding your face
 
-The gate, the collage, the face marquee and the RSVP finale all use
-`assets/face.png`. Until it exists, a hand-drawn fallback face shows.
-To use your real photo:
+The gate invasion, the "it me" sticker and the RSVP finale all use your
+photo. The site looks for it in this order:
 
-1. Use your cutout photo (transparent background, PNG). Keep it under
-   ~1500px tall so it loads fast.
-2. On GitHub: open the `assets` folder → **Add file → Upload files** →
-   drop your image → make sure it's named exactly **`face.png`** → Commit.
+1. `assets/ME (1) 1.png`  ← your file, exact name
+2. `assets/face.png`
+3. `assets/face-fallback.svg` (the drawn stand-in)
+
+So: on GitHub, open the `assets` folder → **Add file → Upload files** →
+drop **ME (1) 1.png** → Commit. Done. (Transparent-background PNG, ideally
+under ~1500px tall so it loads fast.)
 
 No build step. No npm. No node_modules. The libraries (Three.js, GSAP,
 Lenis) load straight from a CDN. This is deliberate: it makes hosting

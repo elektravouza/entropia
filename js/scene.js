@@ -5,7 +5,7 @@
 // becomes stars. Scroll progress (0–1) drives everything.
 // ============================================================
 
-import * as THREE from "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js";
+import * as THREE from "./vendor/three.module.js";
 
 const vertexShader = /* glsl */ `
   varying vec2 vUv;
@@ -69,16 +69,17 @@ const fragmentShader = /* glsl */ `
 
     // ---- the sun: starts high, melts below the horizon ----
     float sunY = mix(0.62, -0.25, smoothstep(0.05, 0.82, uProgress));
-    vec2 sunPos = vec2(0.5 * aspect, sunY);
+    // off-center so it never hides behind the centered type
+    vec2 sunPos = vec2(0.68 * aspect, sunY);
     vec2 pos = vec2(uv.x * aspect, uv.y);
     float d = distance(pos, sunPos);
 
     // wobbly edge — the sun is also having a long day
     float wobble = noise(vec2(atan(pos.y - sunPos.y, pos.x - sunPos.x) * 2.5, uTime * 0.35)) * 0.025;
-    float radius = 0.16 + wobble;
+    float radius = 0.125 + wobble;
 
     float sunCore = smoothstep(radius, radius - 0.012, d);
-    float sunHalo = exp(-d * 4.5) * 0.55;
+    float sunHalo = exp(-d * 6.0) * 0.38;
 
     vec3 sunColDay    = vec3(1.00, 0.95, 0.78);
     vec3 sunColSunset = vec3(1.00, 0.30, 0.15);

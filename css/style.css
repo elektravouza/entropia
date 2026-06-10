@@ -7,12 +7,12 @@
 :root {
   --ink: #101010;
   --paper: #f4f1ea;
-  --acid: #c8ff1e;
-  --acid-soft: #e9ff63;
-  --red: #ff2e2e;
-  --pool: #4da6ff;
-  --pink: #ff7ab6;
-  --hotpink: #ff4fd2;
+  --acid: #ecfd06;
+  --acid-soft: #f5fd7a;
+  --red: #f52d93;
+  --pool: #3d39ea;
+  --pink: #fb92d0;
+  --hotpink: #f52d93;
   --chrome-a: #fdfdfd;
   --chrome-b: #9aa3ad;
   --chrome-c: #e8edf2;
@@ -23,6 +23,8 @@
 }
 
 * { margin: 0; padding: 0; box-sizing: border-box; }
+
+[hidden] { display: none !important; }
 
 html { scrollbar-width: none; }
 html::-webkit-scrollbar { display: none; }
@@ -119,8 +121,6 @@ section { position: relative; }
   filter: drop-shadow(0 0 6px rgba(255, 79, 210, 0.35));
 }
 
-.scribble--hero { top: 8%; left: 50%; transform: translateX(-50%); width: min(90vw, 60rem); height: auto; }
-.scribble--details { inset: 0; width: 100%; height: 100%; opacity: 0.5; }
 .scribble--rsvp { top: 0; right: 0; width: 60%; height: 60%; opacity: 0.45; }
 
 /* ---------- shared bits ---------- */
@@ -159,141 +159,67 @@ section { position: relative; }
 @keyframes marquee { to { transform: translateX(-50%); } }
 
 /* ============================================================
-   ENTER GATE — paika faces × flaneurs gradient
+   ENTER GATE — blank gradient, then she takes over the screen
    ============================================================ */
 
 .gate {
   position: fixed;
   inset: 0;
   z-index: 100;
-  /* flaneurs: cool grey melting into acid yellow */
   background: linear-gradient(180deg, #aeb6bd 0%, #e8e6df 38%, #f4f1ea 55%, var(--acid-soft) 100%);
   color: var(--ink);
   overflow: hidden;
-  display: flex;
-  flex-direction: column;
 }
 
-.gate__corner {
+.gate__label {
   position: absolute;
-  top: 0.4rem;
-  font-family: var(--font-display);
-  font-size: clamp(2.2rem, 9vw, 5rem);
-  line-height: 1;
-  z-index: 3;
-  opacity: 0.9;
-}
-.gate__corner--tl { left: 1rem; }
-.gate__corner--tr { right: 1rem; }
-
-/* stacked faces, slightly stretched & noisy like the reference */
-.gate__faces {
-  position: absolute;
-  inset: 0 0 14dvh 0;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 0;
-  z-index: 1;
-}
-
-.gate__face {
-  width: min(64vw, 24rem);
-  height: 34dvh;
-  object-fit: contain;
-  filter: contrast(1.12) saturate(1.15);
-}
-
-.gate__face--one { transform: scaleX(1.25); }
-.gate__face--two { transform: scaleX(-1.45) scaleY(1.08); margin-top: -2dvh; }
-
-/* the giant grey type crossing the faces */
-.gate__type {
-  position: absolute;
-  inset: 0;
-  z-index: 2;
-  pointer-events: none;
-}
-
-.gate__big {
-  position: absolute;
+  top: 1.2rem;
   left: 50%;
-  width: 110vw;
-  text-align: center;
-  font-family: var(--font-display);
-  font-size: clamp(4rem, 17vw, 11rem);
-  line-height: 0.9;
-  color: rgba(70, 76, 84, 0.82);
-  mix-blend-mode: multiply;
+  transform: translateX(-50%);
+  z-index: 2;
+  font-family: var(--font-pixel);
+  font-size: clamp(0.6rem, 2.2vw, 0.8rem);
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  opacity: 0.7;
   white-space: nowrap;
-  letter-spacing: 0.02em;
 }
 
-.gate__big--one { top: 23dvh; transform: translateX(-50%) rotate(-1deg); }
-.gate__big--two { top: 47dvh; transform: translateX(-50%) rotate(1deg); }
+/* the face invasion */
+.gate__pop { position: absolute; inset: 0; z-index: 1; }
 
-/* message + enter */
+.gate__pop img {
+  position: absolute;
+  filter: contrast(1.1) saturate(1.1) drop-shadow(0 10px 28px rgba(0, 0, 0, 0.22));
+  will-change: transform;
+}
+
+/* sound note + enter, pops in after the invasion */
 .gate__panel {
   position: absolute;
   left: 50%;
-  bottom: 16dvh;
-  transform: translateX(-50%);
+  top: 50%;
+  transform: translate(-50%, -50%);
   z-index: 6;
   text-align: center;
-  width: min(92vw, 36rem);
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 0.9rem;
-}
-
-.gate__serif {
-  font-family: var(--font-serif);
-  font-size: clamp(1.15rem, 3.6vw, 1.6rem);
-  background: var(--paper);
-  border: 2px solid var(--ink);
-  padding: 0.5em 1em;
-  rotate: -1.5deg;
-  box-shadow: 4px 4px 0 var(--ink);
+  gap: 1rem;
+  opacity: 0;
+  scale: 0;
 }
 
 .gate__soundnote {
   font-family: var(--font-pixel);
   font-size: clamp(0.6rem, 2.4vw, 0.8rem);
   letter-spacing: 0.06em;
-  opacity: 0.75;
+  background: var(--paper);
+  border: 2px solid var(--ink);
+  box-shadow: 4px 4px 0 var(--ink);
+  padding: 0.6em 1em;
+  rotate: -1.5deg;
 }
-
-/* face marquee at the bottom instead of a boring bar */
-.gate__facestrip {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  height: 12dvh;
-  z-index: 5;
-  overflow: hidden;
-  border-top: 3px solid var(--ink);
-  background: var(--acid);
-}
-
-.facestrip__track {
-  display: flex;
-  align-items: flex-end;
-  height: 100%;
-  width: max-content;
-  animation: marquee 14s linear infinite;
-}
-
-.facestrip__track img {
-  height: 90%;
-  width: auto;
-  margin: 0 0.4rem;
-}
-
-.facestrip__track img:nth-child(even) { transform: scaleX(-1) rotate(4deg); }
-.facestrip__track img:nth-child(odd) { rotate: -4deg; }
 
 /* ---------- floating UI ---------- */
 
@@ -431,7 +357,7 @@ section { position: relative; }
   line-height: 1.1;
   text-transform: uppercase;
   color: var(--paper);
-  text-shadow: 0 2px 24px rgba(0, 0, 0, 0.35);
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.55), 0 6px 34px rgba(0, 0, 0, 0.4);
   opacity: 0;
   padding: 0 1rem;
 }
@@ -460,6 +386,7 @@ section { position: relative; }
   text-transform: uppercase;
   text-align: center;
   color: var(--paper);
+  text-shadow: 0 2px 6px rgba(0, 0, 0, 0.45), 0 6px 30px rgba(0, 0, 0, 0.35);
   margin-bottom: 3rem;
   display: flex;
   flex-direction: column;
@@ -495,8 +422,7 @@ section { position: relative; }
   border: none;
   background: transparent;
   cursor: pointer;
-  transform-style: preserve-3d;
-  transition: transform 0.7s cubic-bezier(0.34, 1.3, 0.64, 1);
+  perspective: 1200px;
   font-family: var(--font-mono);
   margin: -1.2rem -1.6rem;
 }
@@ -505,7 +431,17 @@ section { position: relative; }
 .sticker--where { rotate: 4deg; z-index: 2; }
 .sticker--dress { rotate: -3deg; z-index: 4; }
 
-.sticker.flipped { transform: rotateY(180deg); }
+/* the flip lives on an inner wrapper so the floating animation
+   on the button can't overwrite it */
+.sticker__inner {
+  position: absolute;
+  inset: 0;
+  display: block;
+  transform-style: preserve-3d;
+  transition: transform 0.7s cubic-bezier(0.34, 1.3, 0.64, 1);
+}
+
+.sticker.flipped .sticker__inner { transform: rotateY(180deg); }
 
 .sticker__face {
   position: absolute;
@@ -535,7 +471,7 @@ section { position: relative; }
 
 .sticker--when  .sticker__front { background: var(--acid); color: var(--ink); }
 .sticker--where .sticker__front { background: var(--red); color: var(--paper); border-color: var(--paper); }
-.sticker--dress .sticker__front { background: var(--pool); color: var(--ink); }
+.sticker--dress .sticker__front { background: var(--pool); color: var(--paper); border-color: var(--paper); }
 
 .sticker__icon { font-size: 2.6rem; }
 
@@ -609,6 +545,7 @@ section { position: relative; }
   font-size: clamp(2.4rem, 7vw, 5rem);
   text-transform: uppercase;
   color: var(--paper);
+  text-shadow: 0 2px 6px rgba(0, 0, 0, 0.45), 0 6px 30px rgba(0, 0, 0, 0.35);
   padding: 0 1.5rem;
   margin-bottom: 3rem;
   display: flex;
@@ -886,11 +823,11 @@ section { position: relative; }
 
 /* ---------- small screens ---------- */
 @media (max-width: 640px) {
-  .gate__face { height: 30dvh; }
-  .gate__big--one { top: 20dvh; }
-  .gate__big--two { top: 44dvh; }
-  .gate__panel { bottom: 15dvh; gap: 0.7rem; }
-  .sticker { margin: -0.4rem 0; }
+  .sticker { width: 64vw; margin: -1.6rem 0; }
+  .sticker__front { font-size: 1.6rem; }
+  .sticker__icon { font-size: 2rem; }
+  .sticker__back { font-size: 0.88rem; padding: 1.6rem; }
+  .sticker__back strong { font-size: 1.2rem; }
   .details__field { flex-direction: column; }
   .itme { margin-top: 0.5rem; }
   .form .btn--big { align-self: stretch; text-align: center; }
@@ -898,5 +835,5 @@ section { position: relative; }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .grain, .hero__arrow, .sticker__cta, .marquee__track, .facestrip__track { animation: none; }
+  .grain, .hero__arrow, .sticker__cta, .marquee__track { animation: none; }
 }

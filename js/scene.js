@@ -50,9 +50,10 @@ const fragmentShader = /* glsl */ `
     vec3 nightTop    = vec3(0.03, 0.03, 0.10);
     vec3 nightBot    = vec3(0.10, 0.07, 0.24);
 
-    // phase blending: day -> sunset (0..0.55), sunset -> night (0.55..1)
-    float p1 = smoothstep(0.05, 0.55, uProgress);
-    float p2 = smoothstep(0.55, 0.95, uProgress);
+    // phase blending, stretched so night arrives slowly:
+    // day -> sunset (0.08..0.6), sunset -> night (0.62..0.97)
+    float p1 = smoothstep(0.08, 0.60, uProgress);
+    float p2 = smoothstep(0.62, 0.97, uProgress);
 
     vec3 top = mix(mix(dayTop, sunsetTop, p1), nightTop, p2);
     vec3 bot = mix(mix(dayBot, sunsetBot, p1), nightBot, p2);
@@ -67,7 +68,7 @@ const fragmentShader = /* glsl */ `
     sky += vec3(1.0, 0.8, 0.6) * mglow * 0.07 * (1.0 - p2 * 0.6);
 
     // ---- the sun: starts high, melts below the horizon ----
-    float sunY = mix(0.62, -0.25, smoothstep(0.0, 0.78, uProgress));
+    float sunY = mix(0.62, -0.25, smoothstep(0.05, 0.82, uProgress));
     vec2 sunPos = vec2(0.5 * aspect, sunY);
     vec2 pos = vec2(uv.x * aspect, uv.y);
     float d = distance(pos, sunPos);

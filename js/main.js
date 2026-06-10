@@ -1,8 +1,8 @@
 // ============================================================
-// ENTROPIA — main orchestration
+// ENTROPIA — main orchestration · v2
 // Lenis (liquid scroll) + GSAP ScrollTrigger (choreography)
 // + Sky (WebGL) + Beach (audio). Scroll = the day of the
-// party: 17:00 daylight at the top, deep night at the RSVP.
+// party: daylight at the top, deep night at the RSVP.
 // ============================================================
 
 import gsap from "https://cdn.jsdelivr.net/npm/gsap@3.12.7/+esm";
@@ -25,6 +25,27 @@ const FORMSPREE_ENDPOINT = "https://formspree.io/f/YOUR_FORM_ID";
 const sky = new Sky(document.getElementById("webgl"));
 const beach = new Beach();
 
+// ---------- her face: real photo or scribble fallback ----------
+// every .face-img falls back to the drawn face until
+// assets/face.png is uploaded (see README).
+const FALLBACK_FACE = "assets/face-fallback.svg";
+document.querySelectorAll(".face-img").forEach((img) => {
+  img.addEventListener("error", () => {
+    if (!img.src.endsWith(FALLBACK_FACE)) img.src = FALLBACK_FACE;
+  }, { once: true });
+});
+
+// the bottom face marquee on the gate
+const strip = document.getElementById("facestripTrack");
+for (let i = 0; i < 24; i++) {
+  const f = document.createElement("img");
+  f.className = "face-img";
+  f.src = "assets/face.png";
+  f.alt = "";
+  f.addEventListener("error", () => (f.src = FALLBACK_FACE), { once: true });
+  strip.appendChild(f);
+}
+
 // ---------- smooth scroll ----------
 const lenis = new Lenis({ lerp: 0.09, smoothWheel: true });
 lenis.on("scroll", ScrollTrigger.update);
@@ -34,18 +55,16 @@ gsap.ticker.lagSmoothing(0);
 document.body.classList.add("locked");
 lenis.stop();
 
-// ---------- the gate ----------
+// ---------- the gate: one button, sound comes with it ----------
 const gate = document.getElementById("gate");
 const soundToggle = document.getElementById("soundToggle");
 const soundLabel = document.getElementById("soundLabel");
-const clock = document.getElementById("dayClock");
 
-function enter(withSound) {
-  if (withSound) {
-    beach.start();
-    soundToggle.classList.add("on");
-    soundLabel.textContent = "sound on";
-  }
+document.getElementById("enterBtn").addEventListener("click", () => {
+  beach.start();
+  soundToggle.classList.add("on");
+  soundLabel.textContent = "sound on";
+
   gsap.to(gate, {
     yPercent: -100,
     duration: 1.1,
@@ -55,7 +74,6 @@ function enter(withSound) {
   document.body.classList.remove("locked");
   lenis.start();
   soundToggle.classList.add("visible");
-  clock.classList.add("visible");
 
   // hero intro: the 26 crashes in
   gsap.fromTo(
@@ -68,10 +86,7 @@ function enter(withSound) {
     { y: 40, opacity: 0 },
     { y: 0, opacity: 1, duration: 1, stagger: 0.15, ease: "power3.out", delay: 1.1 }
   );
-}
-
-document.getElementById("enterSound").addEventListener("click", () => enter(true));
-document.getElementById("enterMute").addEventListener("click", () => enter(false));
+});
 
 soundToggle.addEventListener("click", () => {
   const on = beach.toggle();
@@ -79,20 +94,12 @@ soundToggle.addEventListener("click", () => {
   soundLabel.textContent = on ? "sound on" : "sound off";
 });
 
-// ---------- scroll = time of day ----------
-// 0% scroll → 17:00, 100% scroll → 03:00. The sky and the
-// little corner clock both read from this.
+// ---------- scroll = time of day (slow fade into night) ----------
 ScrollTrigger.create({
   trigger: document.body,
   start: "top top",
   end: "bottom bottom",
-  onUpdate: (self) => {
-    sky.setProgress(self.progress);
-    const minutes = 17 * 60 + self.progress * 10 * 60; // 17:00 + 10h
-    const h = Math.floor(minutes / 60) % 24;
-    const m = Math.floor(minutes % 60);
-    clock.textContent = `${String(h).padStart(2, "0")}:${String(m).padStart(2, "0")}`;
-  },
+  onUpdate: (self) => sky.setProgress(self.progress),
 });
 
 // ---------- generic reveals (everything except hero) ----------
@@ -103,6 +110,28 @@ gsap.utils.toArray("section:not(.hero) [data-reveal]").forEach((el) => {
     duration: 1,
     ease: "power3.out",
     scrollTrigger: { trigger: el, start: "top 82%" },
+  });
+});
+
+// ---------- ambient chaos: tags, glyphs & scribbles drift ----------
+gsap.utils.toArray(".deco, .tag--light").forEach((el) => {
+  gsap.to(el, {
+    y: () => gsap.utils.random(-14, 14),
+    rotation: () => gsap.utils.random(-6, 6),
+    duration: gsap.utils.random(2.2, 4),
+    yoyo: true,
+    repeat: -1,
+    ease: "sine.inOut",
+  });
+});
+
+gsap.utils.toArray(".scribble path").forEach((path) => {
+  const len = path.getTotalLength();
+  gsap.set(path, { strokeDasharray: len, strokeDashoffset: len });
+  gsap.to(path, {
+    strokeDashoffset: 0,
+    ease: "none",
+    scrollTrigger: { trigger: path.closest("section"), start: "top 75%", end: "bottom 60%", scrub: 0.5 },
   });
 });
 
@@ -147,7 +176,7 @@ document.querySelectorAll("[data-flip]").forEach((sticker) => {
   });
 });
 
-gsap.from(".sticker", {
+gsap.from(".sticker, .itme", {
   scale: 0,
   rotate: () => gsap.utils.random(-40, 40),
   stagger: 0.12,
@@ -156,7 +185,7 @@ gsap.from(".sticker", {
   scrollTrigger: { trigger: ".details__field", start: "top 78%" },
 });
 
-// ---------- itinerary: vertical scroll drives horizontal travel ----------
+// ---------- program: vertical scroll drives horizontal travel ----------
 const track = document.getElementById("itineraryTrack");
 gsap.to(track, {
   x: () => -(track.scrollWidth - window.innerWidth + 48),
@@ -169,6 +198,18 @@ gsap.to(track, {
     scrub: 0.5,
     invalidateOnRefresh: true,
   },
+});
+
+// ---------- the form breathes (busy moving bold fields) ----------
+gsap.utils.toArray(".wiggle").forEach((el, i) => {
+  gsap.to(el, {
+    rotation: i % 2 ? 0.8 : -0.8,
+    y: () => gsap.utils.random(-4, 4),
+    duration: gsap.utils.random(1.8, 2.6),
+    yoyo: true,
+    repeat: -1,
+    ease: "sine.inOut",
+  });
 });
 
 // ---------- RSVP ----------
@@ -205,7 +246,30 @@ form.addEventListener("submit", async (e) => {
     }
     beach.fanfare();
     confetti();
-    gsap.from(done, { scale: 0.7, opacity: 0, duration: 0.8, ease: "back.out(1.8)" });
+    faceRain();
+
+    // the birthday girl spins in, judges you, settles
+    gsap.fromTo(
+      "#bigFace",
+      { scale: 0, rotation: -540 },
+      { scale: 1, rotation: 0, duration: 1.4, ease: "elastic.out(1, 0.45)" }
+    );
+    gsap.to("#bigFace", {
+      rotation: 8,
+      yoyo: true,
+      repeat: -1,
+      duration: 0.9,
+      ease: "sine.inOut",
+      delay: 1.5,
+    });
+    gsap.from(".rsvp__doneTitle, .rsvp__doneText", {
+      y: 30,
+      opacity: 0,
+      stagger: 0.15,
+      duration: 0.8,
+      delay: 0.5,
+      ease: "back.out(1.6)",
+    });
   } catch (err) {
     submitBtn.disabled = false;
     submitBtn.textContent = "that didn't work — try again";
@@ -213,7 +277,7 @@ form.addEventListener("submit", async (e) => {
 });
 
 function confetti() {
-  const colors = ["#c8ff1e", "#ff2e2e", "#4da6ff", "#ff7ab6", "#f4f1ea"];
+  const colors = ["#c8ff1e", "#ff2e2e", "#4da6ff", "#ff7ab6", "#ff4fd2", "#f4f1ea"];
   for (let i = 0; i < 90; i++) {
     const c = document.createElement("div");
     c.className = "confetto";
@@ -228,6 +292,27 @@ function confetti() {
       delay: Math.random() * 0.6,
       ease: "power1.in",
       onComplete: () => c.remove(),
+    });
+  }
+}
+
+// it's raining birthday girl
+function faceRain() {
+  const src = document.getElementById("bigFace").src;
+  for (let i = 0; i < 18; i++) {
+    const f = document.createElement("img");
+    f.className = "faceconfetto";
+    f.src = src;
+    f.style.left = Math.random() * 92 + "vw";
+    if (Math.random() > 0.5) f.style.transform = "scaleX(-1)";
+    document.body.appendChild(f);
+    gsap.to(f, {
+      y: window.innerHeight * 1.4,
+      rotation: gsap.utils.random(-540, 540),
+      duration: gsap.utils.random(2.2, 4),
+      delay: Math.random() * 1.4,
+      ease: "power1.in",
+      onComplete: () => f.remove(),
     });
   }
 }

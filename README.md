@@ -14,11 +14,25 @@ Scrolling moves you through the day of the party: the WebGL sky starts at
 entropia/
 ├── index.html      ← the whole page structure & all the copy
 ├── css/style.css   ← the visual identity (colors, type, layout)
+├── assets/
+│   ├── face.png             ← YOUR face cutout (you upload this!)
+│   └── face-fallback.svg    ← drawn stand-in shown until you do
 └── js/
-    ├── main.js     ← scroll choreography, RSVP, confetti
+    ├── main.js     ← scroll choreography, RSVP, confetti, face rain
     ├── scene.js    ← the WebGL sky (Three.js shader)
     └── audio.js    ← procedural ocean sound (no audio files!)
 ```
+
+### ⭐ Adding your face
+
+The gate, the collage, the face marquee and the RSVP finale all use
+`assets/face.png`. Until it exists, a hand-drawn fallback face shows.
+To use your real photo:
+
+1. Use your cutout photo (transparent background, PNG). Keep it under
+   ~1500px tall so it loads fast.
+2. On GitHub: open the `assets` folder → **Add file → Upload files** →
+   drop your image → make sure it's named exactly **`face.png`** → Commit.
 
 No build step. No npm. No node_modules. The libraries (Three.js, GSAP,
 Lenis) load straight from a CDN. This is deliberate: it makes hosting

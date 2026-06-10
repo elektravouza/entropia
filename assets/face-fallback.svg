@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 480">
+  <g fill="none" stroke="#101010" stroke-width="7" stroke-linecap="round" stroke-linejoin="round">
+    <!-- hair -->
+    <path d="M88 210 C70 90 150 28 205 30 C290 32 330 100 318 215 C314 270 322 320 300 360" />
+    <path d="M88 210 C84 280 78 330 100 372" />
+    <path d="M110 80 C150 52 250 50 292 86" stroke-width="5"/>
+    <!-- face -->
+    <path d="M118 200 C118 300 150 388 204 390 C258 392 290 304 290 202" />
+    <!-- sunglasses -->
+    <path d="M96 180 L312 176" stroke-width="9"/>
+    <rect x="118" y="178" width="80" height="62" rx="18" fill="#101010"/>
+    <rect x="212" y="176" width="80" height="62" rx="18" fill="#101010"/>
+    <path d="M198 196 L212 195" stroke-width="9"/>
+    <!-- shine on lenses -->
+    <path d="M132 192 L152 226" stroke="#f4f1ea" stroke-width="5"/>
+    <path d="M226 190 L246 224" stroke="#f4f1ea" stroke-width="5"/>
+    <!-- nose + lips -->
+    <path d="M202 252 C198 268 194 274 204 278" stroke-width="5"/>
+    <path d="M176 322 C196 312 212 312 232 322 C214 342 192 342 176 322 Z" fill="#ff7ab6" stroke-width="5"/>
+    <!-- earring -->
+    <circle cx="106" cy="262" r="12" stroke-width="5"/>
+  </g>
+</svg>

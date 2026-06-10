@@ -3,34 +3,49 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-  <title>ENTROPIA — 26 Years of Chaos</title>
-  <meta name="description" content="You've been cordially summoned to a problem. 18 July · Dragonera Beach Bar · 17:00 · Glam on the Beach." />
-  <meta property="og:title" content="ENTROPIA — 26 Years of Chaos" />
-  <meta property="og:description" content="A full-day, full-night beach situation. 18 July · Dragonera Beach Bar · 17:00." />
+  <title>ENTROPIA — she's turning 26</title>
+  <meta name="description" content="It's her 26th birthday and you're cordially summoned to the problem. 18 July · Dragonera Beach Bar · Glam on the Beach." />
+  <meta property="og:title" content="ENTROPIA — she's turning 26" />
+  <meta property="og:description" content="A full-day, full-night beach situation. 18 July · Dragonera Beach Bar." />
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='80' font-size='80'>🍒</text></svg>" />
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Anton&family=Instrument+Serif:ital@0;1&family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Anton&family=Instrument+Serif:ital@0;1&family=Silkscreen:wght@400;700&family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="css/style.css" />
 </head>
 <body>
 
-  <!-- ===================== ENTER GATE ===================== -->
+  <!-- ===================== ENTER GATE (paika-style) ===================== -->
   <div class="gate" id="gate">
-    <div class="gate__inner">
-      <p class="gate__label">entropia · invitation nº 26</p>
-      <h1 class="gate__title">you've been<br /><em>cordially</em> summoned<br />to a <span class="gate__problem">problem</span></h1>
-      <p class="gate__sub">scroll-powered. sun-flavored. scientifically chaotic.<br />headphones recommended. shame not invited.</p>
-      <div class="gate__buttons">
-        <button class="btn btn--solid" id="enterSound">enter with sound<span class="btn__note">recommended</span></button>
-        <button class="btn btn--ghost" id="enterMute">enter muted<span class="btn__note">coward</span></button>
-      </div>
+
+    <span class="gate__corner gate__corner--tl">18/07</span>
+    <span class="gate__corner gate__corner--tr">07/18</span>
+
+    <span class="tag" style="--r:-7deg; top:16%; left:6%;">INV Nº26</span>
+    <span class="tag" style="--r:5deg; top:24%; right:7%;">GLAM:ON</span>
+    <span class="tag" style="--r:-4deg; top:55%; left:4%;">SPF:50</span>
+    <span class="tag" style="--r:8deg; top:62%; right:5%;">SHAME:0%</span>
+
+    <div class="gate__faces" aria-hidden="true">
+      <img class="gate__face gate__face--one face-img" src="assets/face.png" alt="" />
+      <img class="gate__face gate__face--two face-img" src="assets/face.png" alt="" />
     </div>
-    <div class="gate__marquee" aria-hidden="true">
-      <div class="marquee__track">
-        <span>18.07 — DRAGONERA BEACH BAR — 17:00 — GLAM ON THE BEACH — NO REFUNDS ON MEMORIES — &nbsp;</span>
-        <span>18.07 — DRAGONERA BEACH BAR — 17:00 — GLAM ON THE BEACH — NO REFUNDS ON MEMORIES — &nbsp;</span>
+
+    <div class="gate__type" aria-hidden="false">
+      <h1 class="gate__big gate__big--one">IT'S MY</h1>
+      <h1 class="gate__big gate__big--two">BIRTHDAY</h1>
+    </div>
+
+    <div class="gate__panel">
+      <p class="gate__serif">the 26th edition. you're <em>cordially summoned</em> to the problem.</p>
+      <p class="gate__soundnote">♪ this website makes sound. so do I. volume up.</p>
+      <button class="btn btn--enter" id="enterBtn">ENTER</button>
+    </div>
+
+    <div class="gate__facestrip" aria-hidden="true">
+      <div class="facestrip__track" id="facestripTrack">
+        <!-- faces injected by js -->
       </div>
     </div>
   </div>
@@ -43,8 +58,6 @@
     <span class="soundtoggle__dot"></span><span id="soundLabel">sound off</span>
   </button>
 
-  <div class="clock" id="dayClock" aria-hidden="true">17:00</div>
-
   <!-- ===================== SCROLL JOURNEY ===================== -->
   <main id="journey">
 
@@ -56,10 +69,20 @@
           <span>HOT GIRL THERMODYNAMICS ☀ SUN, SALT &amp; STATISTICALLY GUARANTEED CHAOS ☀ </span>
         </div>
       </div>
+
+      <svg class="scribble scribble--hero" viewBox="0 0 400 300" aria-hidden="true">
+        <path d="M30,210 C90,40 150,260 210,90 S330,250 385,60 M60,260 C160,170 240,290 350,180" />
+      </svg>
+
+      <span class="tag tag--light" style="--r:-6deg; top:22%; left:7%;">BRAIN:EMPTY(!)</span>
+      <span class="tag tag--light" style="--r:5deg; top:30%; right:8%;">(HQ) BEACH</span>
+      <span class="deco" style="--r:14deg; top:64%; left:10%;">✶</span>
+      <span class="deco" style="--r:-10deg; top:20%; right:16%;">♥</span>
+
       <div class="hero__center">
         <p class="hero__kicker" data-reveal>the second law of thermodynamics, but make it fashion</p>
         <h2 class="hero__number"><span class="hero__digit">2</span><span class="hero__digit">6</span></h2>
-        <p class="hero__tagline" data-reveal>entropy only ever increases.<br /><em>so does she.</em></p>
+        <p class="hero__tagline" data-reveal>chaos only ever increases.<br /><em>so does she.</em></p>
       </div>
       <div class="hero__hint">scroll, baby<span class="hero__arrow">↓</span></div>
     </section>
@@ -69,27 +92,37 @@
       <div class="manifesto__pin">
         <p class="manifesto__line">I'm turning <em>26.</em></p>
         <p class="manifesto__line">which is basically 25, but with worse decisions and <em>better outfits.</em></p>
+        <p class="manifesto__line">my skincare routine says responsible adult.<br /><em>my group chat knows the truth.</em></p>
         <p class="manifesto__line">so we're doing what any responsible adult would do:</p>
         <p class="manifesto__line manifesto__line--big">a full-day, full-night <em>situation</em> on a beach.</p>
-        <p class="manifesto__line">agenda: <em>everything.</em> dress code: <em>unwell, but glamorous.</em></p>
+        <p class="manifesto__line">agenda: <em>everything.</em><br />dress code: <em>glam on the beach. (try it.)</em></p>
       </div>
     </section>
 
-    <!-- ACT III · THE DETAILS (discoverable) -->
+    <!-- ACT III · THE INTEL (chaotic collage) -->
     <section class="details" id="details">
-      <h3 class="details__title" data-reveal>the intel<span class="details__sub">tap the stickers. earn your information.</span></h3>
-      <div class="details__field">
+      <svg class="scribble scribble--details" viewBox="0 0 400 600" aria-hidden="true">
+        <path d="M40,80 C200,-20 340,160 180,260 S30,420 220,500 S380,560 350,440" />
+      </svg>
 
+      <span class="tag tag--light" style="--r:6deg; top:8%; right:8%;">HYDRATION? OPTIONAL</span>
+      <span class="tag tag--light" style="--r:-5deg; bottom:10%; left:6%;">(01) GLAM</span>
+      <span class="deco" style="--r:8deg; top:14%; left:8%;">☼</span>
+      <span class="deco" style="--r:-14deg; bottom:16%; right:10%;">⚡</span>
+
+      <h3 class="details__title" data-reveal>the intel<span class="details__sub">tap the mess. earn your information.</span></h3>
+
+      <div class="details__field">
         <button class="sticker sticker--when" data-flip>
-          <span class="sticker__face sticker__front"><span class="sticker__icon">⏱</span>WHEN<span class="sticker__cta">tap me</span></span>
+          <span class="sticker__face sticker__front"><span class="sticker__icon">⏱</span>WHEN<span class="sticker__cta">tap tap tap</span></span>
           <span class="sticker__face sticker__back">
-            <strong>SAT 18 JULY · 17:00</strong>
-            sharp-ish. we both know you'll be late.<br /><em>be late beautifully.</em>
+            <strong>SAT 18 JULY · 15:00</strong>
+            shots at three. we both know you'll be late.<br /><em>be late beautifully.</em>
           </span>
         </button>
 
         <button class="sticker sticker--where" data-flip>
-          <span class="sticker__face sticker__front"><span class="sticker__icon">⌖</span>WHERE<span class="sticker__cta">tap me</span></span>
+          <span class="sticker__face sticker__front"><span class="sticker__icon">⌖</span>WHERE<span class="sticker__cta">tap tap tap</span></span>
           <span class="sticker__face sticker__back">
             <strong>DRAGONERA BEACH BAR</strong>
             follow the bass and the smell of sunscreen.<br /><em>you'll know.</em>
@@ -97,37 +130,47 @@
         </button>
 
         <button class="sticker sticker--dress" data-flip>
-          <span class="sticker__face sticker__front"><span class="sticker__icon">✚</span>DRESS CODE<span class="sticker__cta">tap me</span></span>
+          <span class="sticker__face sticker__front"><span class="sticker__icon">✚</span>DRESS CODE<span class="sticker__cta">tap tap tap</span></span>
           <span class="sticker__face sticker__back">
             <strong>GLAM ON THE BEACH</strong>
-            if your look can't survive a swim,<br /><em>that's between you and your god.</em>
+            (try it.) if your look can't survive a swim,<br /><em>that's between you and your god.</em>
           </span>
         </button>
 
+        <figure class="itme" aria-hidden="true">
+          <img class="face-img" src="assets/face.png" alt="" />
+          <figcaption>it me</figcaption>
+        </figure>
       </div>
     </section>
 
-    <!-- ACT IV · ITINERARY (horizontal) -->
+    <!-- ACT IV · THE PROGRAM (horizontal, frameless, loud) -->
     <section class="itinerary" id="itinerary">
       <div class="itinerary__pin">
-        <h3 class="itinerary__title">the descent<span class="itinerary__sub">— a schedule, loosely speaking —</span></h3>
+        <h3 class="itinerary__title">the program<span class="itinerary__sub">— loosely speaking —</span></h3>
         <div class="itinerary__track" id="itineraryTrack">
-          <article class="card"><span class="card__time">17:00</span><h4>arrival &amp; outfit judging</h4><p>lovingly. mostly.</p></article>
-          <article class="card"><span class="card__time">17:30</span><h4>swimming. with the glam.</h4><p>yes. that's the point.</p></article>
-          <article class="card"><span class="card__time">20:30</span><h4>sunset</h4><p>mandatory group photo. four hundred retakes.</p></article>
-          <article class="card"><span class="card__time">21:00</span><h4>food</h4><p>carbs are invited too. they RSVP'd first.</p></article>
-          <article class="card"><span class="card__time">23:00</span><h4>dancing on questionable surfaces</h4><p>the sand counts. the tables count more.</p></article>
-          <article class="card card--mystery"><span class="card__time">??:??</span><h4>decisions</h4><p>we'll discuss them never.</p></article>
+
+          <article class="prog"><span class="prog__time">15:00</span><h4 class="prog__what">welcome shots</h4><p class="prog__note">hydration is a concept.</p></article>
+          <article class="prog"><span class="prog__time">16:00</span><h4 class="prog__what">swimming · platsa ploutsing</h4><p class="prog__note">that's the scientific term.</p></article>
+          <article class="prog"><span class="prog__time">17:00</span><h4 class="prog__what">let's get the party starting</h4><p class="prog__note">this is not a drill.</p></article>
+          <article class="prog"><span class="prog__time">21:00</span><h4 class="prog__what">food</h4><p class="prog__note">munchies are invited too. they RSVP'd first.</p></article>
+          <article class="prog"><span class="prog__time">23:00</span><h4 class="prog__what">the cantine is closing</h4><p class="prog__note">we are not.</p></article>
+          <article class="prog prog--mystery"><span class="prog__time">??:??</span><h4 class="prog__what">what happens next</h4><p class="prog__note">we will never discuss.</p></article>
+
         </div>
       </div>
     </section>
 
     <!-- ACT V · BRING LIST -->
     <section class="bring" id="bring">
+      <span class="tag tag--light" style="--r:-6deg; top:10%; right:8%;">PACKING:LOADING…</span>
+      <span class="deco" style="--r:12deg; top:16%; left:8%;">✶</span>
+
       <h3 class="bring__title" data-reveal>pack like you mean it</h3>
       <ul class="bring__list">
         <li data-reveal><span>your swimsuit</span><em>— the dramatic one</em></li>
         <li data-reveal><span>a towel</span><em>— you're an adult, allegedly</em></li>
+        <li data-reveal><span>your hammock</span><em>— VIP seating is strictly BYO</em></li>
         <li data-reveal><span>your glam</span><em>— non-negotiable</em></li>
         <li data-reveal><span>good energy</span><em>— bad vibes swim home</em></li>
         <li data-reveal><span>your friends</span><em>— the fun ones</em></li>
@@ -137,6 +180,10 @@
 
     <!-- ACT VI · RSVP -->
     <section class="rsvp" id="rsvp">
+      <svg class="scribble scribble--rsvp" viewBox="0 0 400 600" aria-hidden="true">
+        <path d="M60,40 C300,120 80,260 280,330 S60,520 320,560" />
+      </svg>
+
       <div class="rsvp__inner">
         <h3 class="rsvp__title" data-reveal>don't make me<br /><em>drink alone.</em></h3>
         <p class="rsvp__sub" data-reveal>I'm calculating the alcohol-per-guest ratio and your answer is load-bearing. this is science.</p>
@@ -144,29 +191,30 @@
         <form class="form" id="rsvpForm" data-reveal>
           <fieldset class="form__attend">
             <legend class="form__legend">so. are you coming or are you boring?</legend>
-            <label class="pill"><input type="radio" name="attendance" value="YES" required /><span>YES — obviously. I <em>am</em> the party.</span></label>
-            <label class="pill"><input type="radio" name="attendance" value="NO" /><span>NO — I'm boring and I accept the consequences.</span></label>
+            <label class="pill wiggle"><input type="radio" name="attendance" value="YES" required /><span>YES — obviously. I <em>am</em> the party.</span></label>
+            <label class="pill wiggle"><input type="radio" name="attendance" value="NO" /><span>NO — I have better things to do <em>(a lie)</em></span></label>
           </fieldset>
 
-          <label class="form__field">
+          <label class="form__field wiggle">
             <span class="form__label">who are you, icon?</span>
-            <input type="text" name="name" placeholder="your name" required autocomplete="name" />
+            <input type="text" name="name" placeholder="YOUR NAME" required autocomplete="name" />
           </label>
 
-          <label class="form__field">
+          <label class="form__field wiggle">
             <span class="form__label">dragging a +1 along? name them so I can welcome them. and stalk them. mostly welcome.</span>
-            <input type="text" name="plusone" placeholder="their name, or leave empty if flying solo" />
+            <input type="text" name="plusone" placeholder="THEIR NAME / FLYING SOLO" />
           </label>
 
-          <label class="form__field">
+          <label class="form__field wiggle">
             <span class="form__label">leave a message for the birthday girl. flattery accepted. encouraged, actually.</span>
-            <textarea name="message" rows="3" placeholder="say something nice. or unhinged. ideally both."></textarea>
+            <textarea name="message" rows="3" placeholder="SAY SOMETHING NICE. OR UNHINGED. IDEALLY BOTH."></textarea>
           </label>
 
           <button type="submit" class="btn btn--solid btn--big" id="submitBtn">seal my fate</button>
         </form>
 
         <div class="rsvp__done" id="rsvpDone" hidden>
+          <img class="rsvp__bigface face-img" id="bigFace" src="assets/face.png" alt="the birthday girl approves" />
           <h4 class="rsvp__doneTitle">received.</h4>
           <p class="rsvp__doneText" id="rsvpDoneText">the ratio has been updated. wear sunscreen. bring chaos.<br /><em>see you july 18.</em></p>
         </div>
@@ -174,8 +222,8 @@
 
       <footer class="footer">
         <div class="marquee__track">
-          <span>NO REFUNDS ON MEMORIES — 18.07 — DRAGONERA BEACH BAR — 17:00 UNTIL THE SEA ASKS US TO LEAVE — &nbsp;</span>
-          <span>NO REFUNDS ON MEMORIES — 18.07 — DRAGONERA BEACH BAR — 17:00 UNTIL THE SEA ASKS US TO LEAVE — &nbsp;</span>
+          <span>NO REFUNDS ON MEMORIES — 18.07 — DRAGONERA BEACH BAR — 15:00 UNTIL THE SEA ASKS US TO LEAVE — &nbsp;</span>
+          <span>NO REFUNDS ON MEMORIES — 18.07 — DRAGONERA BEACH BAR — 15:00 UNTIL THE SEA ASKS US TO LEAVE — &nbsp;</span>
         </div>
       </footer>
     </section>

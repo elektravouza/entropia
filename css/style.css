@@ -26,14 +26,23 @@
 
 [hidden] { display: none !important; }
 
-html { scrollbar-width: none; -webkit-text-size-adjust: 100%; text-size-adjust: 100%; }
+html {
+  scrollbar-width: none;
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+  overflow-x: clip;
+  overscroll-behavior-x: none;
+}
 html::-webkit-scrollbar { display: none; }
 
 body {
   background: var(--ink);
   color: var(--paper);
   font-family: var(--font-mono);
-  overflow-x: hidden;
+  width: 100%;
+  max-width: 100%;
+  overflow-x: clip;
+  overscroll-behavior-x: none;
   -webkit-font-smoothing: antialiased;
 }
 

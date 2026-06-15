@@ -233,16 +233,19 @@ gsap.to(track, {
 });
 
 // ---------- the form breathes (busy moving bold fields) ----------
-gsap.utils.toArray(".wiggle").forEach((el, i) => {
-  gsap.to(el, {
-    rotation: i % 2 ? 0.8 : -0.8,
-    y: () => gsap.utils.random(-4, 4),
-    duration: gsap.utils.random(1.8, 2.6),
-    yoyo: true,
-    repeat: -1,
-    ease: "sine.inOut",
+// disabled on phones so the form stays put while typing
+if (window.innerWidth > 640) {
+  gsap.utils.toArray(".wiggle").forEach((el, i) => {
+    gsap.to(el, {
+      rotation: i % 2 ? 0.8 : -0.8,
+      y: () => gsap.utils.random(-4, 4),
+      duration: gsap.utils.random(1.8, 2.6),
+      yoyo: true,
+      repeat: -1,
+      ease: "sine.inOut",
+    });
   });
-});
+}
 
 // ---------- RSVP ----------
 const form = document.getElementById("rsvpForm");

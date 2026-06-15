@@ -26,7 +26,7 @@
 
 [hidden] { display: none !important; }
 
-html { scrollbar-width: none; }
+html { scrollbar-width: none; -webkit-text-size-adjust: 100%; text-size-adjust: 100%; }
 html::-webkit-scrollbar { display: none; }
 
 body {
@@ -205,10 +205,15 @@ section { position: relative; }
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
+  width: min(90vw, 32rem);
   gap: 1rem;
   opacity: 0;
   scale: 0;
 }
+
+.gate__panel .btn--enter { align-self: center; }
+.gate__soundnote { text-align: center; }
 
 .gate__soundnote {
   font-family: var(--font-pixel);
@@ -873,6 +878,19 @@ section { position: relative; }
   .form__label         { font-size: 1.2rem; }
   .form input[type="text"],
   .form textarea       { font-size: 1.3rem; }
+
+  /* keep the form still on phones: no tilt, no focus zoom/jump,
+     nothing that pushes past the screen edge */
+  .form input[type="text"],
+  .form textarea,
+  .form__field:nth-of-type(odd) input,
+  .form__field:nth-of-type(even) input { rotate: 0deg; }
+  .form input:focus,
+  .form textarea:focus { transform: none; box-shadow: 4px 4px 0 var(--acid); }
+  .pill:nth-child(2) span,
+  .pill:nth-child(3) span { rotate: 0deg; }
+  .pill:hover span { transform: none; }
+  .pill input:checked + span { transform: none; }
   .rsvp__sub           { font-size: 1.2rem; }
   .rsvp__doneText      { font-size: 1.25rem; }
 

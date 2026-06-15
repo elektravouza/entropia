@@ -821,17 +821,69 @@ section { position: relative; }
   pointer-events: none;
 }
 
-/* ---------- small screens ---------- */
+/* ---------- tablets / mid screens ---------- */
+@media (max-width: 900px) {
+  .hero { padding: 5rem 1.25rem 3.5rem; }
+  .hero__marquee { top: 3.4rem; }
+  .details { padding: 6rem 1rem; }
+  .bring { padding: 6rem 1.25rem; }
+  .rsvp { padding-top: 7rem; }
+  .scribble--rsvp { width: 72%; height: 50%; opacity: 0.32; }
+}
+
+/* ---------- small screens (phones) ---------- */
 @media (max-width: 640px) {
-  .sticker { width: 64vw; margin: -1.6rem 0; }
-  .sticker__front { font-size: 1.6rem; }
+  /* keep the big 26 inside the viewport */
+  .hero { padding: 4.5rem 1rem 3rem; }
+  .hero__number { font-size: clamp(7rem, 40vw, 30rem); }
+  .hero__marquee { font-size: 0.8rem; }
+
+  .details { padding: 5rem 0.85rem; }
+  .bring { padding: 5rem 1rem; }
+  .rsvp { padding-top: 6rem; }
+  .rsvp__inner { padding: 0 1rem 5rem; }
+
+  /* stickers stack cleanly */
+  .sticker { width: 72vw; margin: -1.2rem 0; }
   .sticker__icon { font-size: 2rem; }
-  .sticker__back { font-size: 0.88rem; padding: 1.6rem; }
-  .sticker__back strong { font-size: 1.2rem; }
+  .sticker__back { padding: 1.6rem; }
   .details__field { flex-direction: column; }
   .itme { margin-top: 0.5rem; }
+
   .form .btn--big { align-self: stretch; text-align: center; }
   .prog:nth-child(even) { margin-top: 1.5rem; }
+
+  /* ---- readable copy: +2–3px for legibility on phones ---- */
+  .hero__kicker        { font-size: 0.9rem; }
+  .hero__tagline       { font-size: 1.25rem; }
+  .hero__hint          { font-size: 1.2rem; }
+
+  .details__sub        { font-size: 1.15rem; }
+  .sticker__front      { font-size: 1.7rem; }
+  .sticker__back       { font-size: 1.05rem; }
+  .sticker__back strong{ font-size: 1.4rem; }
+  .sticker__cta        { font-size: 0.82rem; }
+
+  .itinerary__sub      { font-size: 1.15rem; }
+  .prog__note          { font-size: 1.25rem; }
+
+  .bring__list span    { font-size: 1.4rem; }
+  .bring__list em      { font-size: 1.15rem; }
+
+  .form__label         { font-size: 1.2rem; }
+  .form input[type="text"],
+  .form textarea       { font-size: 1.3rem; }
+  .rsvp__sub           { font-size: 1.2rem; }
+  .rsvp__doneText      { font-size: 1.25rem; }
+
+  .footer              { font-size: 1.1rem; }
+  .tag                 { font-size: 0.7rem; }
+}
+
+/* ---------- very small phones ---------- */
+@media (max-width: 380px) {
+  .hero__number { font-size: clamp(6rem, 42vw, 30rem); }
+  .sticker { width: 80vw; }
 }
 
 @media (prefers-reduced-motion: reduce) {

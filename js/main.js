@@ -14,13 +14,16 @@ import { Beach } from "./audio.js";
 gsap.registerPlugin(ScrollTrigger);
 
 // ------------------------------------------------------------
-// RSVP backend — paste your own Formspree endpoint here.
-// Create a free form at https://formspree.io → copy the URL
-// that looks like https://formspree.io/f/abcdwxyz
+// RSVP backend — Google Sheet via Apps Script.
+// Each RSVP is appended as a row (timestamp, attendance, name,
+// +1, message). The sheet exports to CSV any time:
+//   File → Download → Comma-separated values (.csv)
+// Paste your deployed Web App URL below (ends with /exec).
+// Full setup steps are in GOOGLE_SHEET_SETUP.md.
 // Until you do, the form runs in demo mode (shows success,
-// sends nothing). Full instructions in README.md.
+// sends nothing).
 // ------------------------------------------------------------
-const FORMSPREE_ENDPOINT = "https://formspree.io/f/YOUR_FORM_ID";
+const SHEET_ENDPOINT = "https://script.google.com/macros/s/AKfycbzg5ZHYxPnBO4g4taPsNpdrd9vhphTfdOkhmuhrKIgZ_-UyRyjFvOWv8cL_S0y7laheUA/exec";
 
 const sky = new Sky(document.getElementById("webgl"));
 const beach = new Beach();
@@ -253,18 +256,22 @@ form.addEventListener("submit", async (e) => {
   submitBtn.textContent = "consulting the stars…";
 
   const data = Object.fromEntries(new FormData(form).entries());
-  const isDemo = FORMSPREE_ENDPOINT.includes("YOUR_FORM_ID");
+  const isDemo = SHEET_ENDPOINT.includes("YOUR_DEPLOYMENT_ID");
 
   try {
     if (!isDemo) {
-      const res = await fetch(FORMSPREE_ENDPOINT, {
+      // Apps Script Web Apps don't return CORS headers, so we send a
+      // "simple" text/plain request in no-cors mode. The row still lands
+      // in the sheet; the response is opaque, so we treat a completed
+      // fetch (no network error) as success.
+      await fetch(SHEET_ENDPOINT, {
         method: "POST",
-        headers: { "Content-Type": "application/json", Accept: "application/json" },
+        mode: "no-cors",
+        headers: { "Content-Type": "text/plain;charset=utf-8" },
         body: JSON.stringify(data),
       });
-      if (!res.ok) throw new Error("formspree said no");
     } else {
-      console.warn("ENTROPIA: demo mode — no Formspree endpoint set, RSVP not actually sent. See README.md.");
+      console.warn("ENTROPIA: demo mode — no Google Sheet endpoint set, RSVP not actually sent. See GOOGLE_SHEET_SETUP.md.");
       await new Promise((r) => setTimeout(r, 900));
     }
 

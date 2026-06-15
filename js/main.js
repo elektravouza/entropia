@@ -13,6 +13,11 @@ import { Beach } from "./audio.js";
 
 gsap.registerPlugin(ScrollTrigger);
 
+// mobile browsers resize the viewport when the URL bar shows/hides.
+// without this, ScrollTrigger refreshes mid-scroll and pinned sections
+// (manifesto, the program) can render twice / jump.
+ScrollTrigger.config({ ignoreMobileResize: true });
+
 // ------------------------------------------------------------
 // RSVP backend — Google Sheet via Apps Script.
 // Each RSVP is appended as a row (timestamp, attendance, name,
@@ -184,6 +189,9 @@ const manifestoTl = gsap.timeline({
     start: "top top",
     end: "bottom bottom",
     pin: ".manifesto__pin",
+    pinSpacing: true,
+    anticipatePin: 1,
+    invalidateOnRefresh: true,
     scrub: 0.6,
   },
 });
@@ -218,19 +226,25 @@ gsap.from(".sticker, .itme", {
 });
 
 // ---------- program: vertical scroll drives horizontal travel ----------
+// desktop only. on phones the program is a normal vertical list (see CSS),
+// so there's no pin and no horizontal scroll — nothing to ghost or stutter.
 const track = document.getElementById("itineraryTrack");
-gsap.to(track, {
-  x: () => -(track.scrollWidth - window.innerWidth + 48),
-  ease: "none",
-  scrollTrigger: {
-    trigger: ".itinerary",
-    start: "top top",
-    end: "bottom bottom",
-    pin: ".itinerary__pin",
-    scrub: 0.5,
-    invalidateOnRefresh: true,
-  },
-});
+if (window.innerWidth > 640) {
+  gsap.to(track, {
+    x: () => -(track.scrollWidth - window.innerWidth + 48),
+    ease: "none",
+    scrollTrigger: {
+      trigger: ".itinerary",
+      start: "top top",
+      end: "bottom bottom",
+      pin: ".itinerary__pin",
+      pinSpacing: true,
+      anticipatePin: 1,
+      scrub: 0.5,
+      invalidateOnRefresh: true,
+    },
+  });
+}
 
 // ---------- the form breathes (busy moving bold fields) ----------
 // disabled on phones so the form stays put while typing

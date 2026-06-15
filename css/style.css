@@ -867,6 +867,25 @@ section { position: relative; }
   .form .btn--big { align-self: stretch; text-align: center; }
   .prog:nth-child(even) { margin-top: 1.5rem; }
 
+  /* the program: vertical list on phones — no pin, no horizontal scroll */
+  .itinerary { height: auto; }
+  .itinerary__pin {
+    height: auto;
+    min-height: 0;
+    overflow: visible;
+    justify-content: flex-start;
+    padding: 4.5rem 0 5rem;
+  }
+  .itinerary__track {
+    flex-direction: column;
+    align-items: flex-start;
+    width: auto;
+    gap: 2.6rem;
+    transform: none !important;
+  }
+  .prog { width: 100%; rotate: 0deg; }
+  .prog:nth-child(even) { rotate: 0deg; margin-top: 0; }
+
   /* ---- readable copy: +2–3px for legibility on phones ---- */
   .hero__kicker        { font-size: 0.9rem; }
   .hero__tagline       { font-size: 1.25rem; }
